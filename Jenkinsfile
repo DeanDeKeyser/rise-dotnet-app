@@ -16,6 +16,6 @@ node {
     }
     stage('Health Check') {
         sh 'sleep 6'
-        sh 'curl -I http://localhost:5051'
+        sh 'curl -I http://172.16.0.10:5051'
     }
 }
