@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Kopieer solution en projectdefinities voor dependency restore caching
+# Kopieer solution en alle csproj files voor restore caching
 COPY Rise.sln .
 COPY src/Rise.Domain/Rise.Domain.csproj src/Rise.Domain/
 COPY src/Rise.Shared/Rise.Shared.csproj src/Rise.Shared/
@@ -12,10 +12,11 @@ COPY src/Rise.Client/Rise.Client.csproj src/Rise.Client/
 COPY src/Rise.Server/Rise.Server.csproj src/Rise.Server/
 COPY tests/Rise.Domain.Tests/Rise.Domain.Tests.csproj tests/Rise.Domain.Tests/
 COPY tests/Rise.Services.Tests/Rise.Services.Tests.csproj tests/Rise.Services.Tests/
+COPY tests/Rise.Client.Tests/Rise.Client.Tests.csproj tests/Rise.Client.Tests/
 
 RUN dotnet restore Rise.sln
 
-# Kopieer de volledige broncode en publiceer het Server project
+# Kopieer de rest van de broncode en publiceer het Server project
 COPY . .
 RUN dotnet publish src/Rise.Server/Rise.Server.csproj -c Release -o /app/publish
 
